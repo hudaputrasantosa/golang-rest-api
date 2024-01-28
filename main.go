@@ -1,19 +1,21 @@
 package main
 
 import (
+	"log"
+
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	r := gin.Default()
+	router := SetupRouter()
 
 	// r.GET("/", func(c *gin.Context) {
 	// 	c.JSON(http.StatusOK, gin.H{"data": "hello world"})
 	// })
 
-	r.Run()
+	log.Fatal(router.Run())
 }
 
 func SetupRouter() *gin.Engine {
@@ -24,6 +26,8 @@ func SetupRouter() *gin.Engine {
 		AllowHeaders:  []string{"*"},
 		AllowWildcard: true,
 	}))
+
+	// var routes router.InitUserRoute(router)
 
 	router.Use(helmet.Default())
 	routes.initUserRoute(router)
